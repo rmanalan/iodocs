@@ -68,7 +68,7 @@ Adding an API to the I/O Docs configuration is relatively simple.
       "lowercaseapi": {
           "name": "Lower Case API",
           "protocol": "http",
-          "baseURL": "api.lowercase.sample.com",
+          "host": "api.lowercase.sample.com",
           "publicPath": "/v1",
           "auth": "key",
           "keyParam": "api_key_var_name"
@@ -117,7 +117,7 @@ The *apiconfig.json* file contains high-level information about an API.
 1.  "lower": {
 2.     "name": "My API",
 3      "protocol": "http",
-4.     "baseURL": "api.lowercase.sample.com",
+4.     "host": "api.lowercase.sample.com",
 5.     "publicPath": "/v1",
 6.     "auth": "key",
 7.     "keyParam": "api_key_var_name"
@@ -136,8 +136,8 @@ Line:
 
 3. "protocol" key value is either *http* or *https*
 
-4. "baseURL" key value is the host name of
-    the API calls (should not include protocol)
+4. "host" key value is the host name of
+    the API calls (should not include protocol or port number)
 
 5. "publicPath" key value is the full path prefix prepended
     to all method URIs. This value often includes the version
@@ -169,7 +169,7 @@ Line:
 1.    "twitter": {
 2.        "name": "Twitter API",
 3.        "protocol": "http",
-4.        "baseURL": "api.twitter.com",
+4.        "host": "api.twitter.com",
 5.        "publicPath": "/1",
 6.        "privatePath": "/1",
 7.        "booleanTrueVal": "true",
@@ -200,8 +200,8 @@ Line:
 3. "protocol" key value contains either *http* or *https*,
     but you're welcome to try other protocols.
 
-4. "baseURL" key value is the base URL that accepts
-    the API calls (should not include protocol)
+4. "host" key value is the host name of
+    the API calls (should not include protocol or port number)
 
 5. "publicPath" key value is the path prefix prepended
     to all method URIs for non-protected method resources.
@@ -332,7 +332,7 @@ Line:
 
 8. "HTTPMethod" key value can be either GET, POST, DELETE or PUT (all caps)
 
-9. "URI" key value is the path to the method that is appended to the *baseURL* and the public/private path.
+9. "URI" key value is the path to the method that is appended to the *host* and the public/private path.
 
 10. "RequiresOAuth" key value is either Y or N. If Y, the *privatePath* is used from the top-level config. If N, the *publicPath* is used from the top-level config.
 

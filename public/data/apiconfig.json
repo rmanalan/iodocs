@@ -2,7 +2,7 @@
     "klout": {
         "name": "Klout API",
         "protocol": "http",
-        "baseURL": "api.klout.com",
+        "host": "api.klout.com",
         "publicPath": "/1",
         "auth": "key",
         "keyParam": "key"
@@ -10,7 +10,7 @@
     "fanfeedr": {
         "name": "FanFeedr Sports Basic API",
         "protocol": "http",
-        "baseURL": "ffapi.fanfeedr.com",
+        "host": "ffapi.fanfeedr.com",
         "publicPath": "",
         "auth": "key",
         "keyParam": "api_key"
@@ -18,7 +18,7 @@
     "alibris": {
         "name": "Alibris API",
         "protocol": "http",
-        "baseURL": "api.alibris.com",
+        "host": "api.alibris.com",
         "publicPath": "/v1/public",
         "auth": "key",
         "keyParam": "apikey"
@@ -26,7 +26,7 @@
     "usatoday": {
         "name": "USA TODAY Census API",
          "protocol": "http",
-         "baseURL": "api.usatoday.com",
+         "host": "api.usatoday.com",
          "publicPath": "/open",
          "auth": "key",
          "keyParam": "api_key"
@@ -34,7 +34,7 @@
     "simplegeo": {
         "name": "SimpleGeo",
         "protocol": "http",
-        "baseURL": "api.simplegeo.com",
+        "host": "api.simplegeo.com",
         "publicPath": "",
         "auth": "oauth",
         "oauth": {
