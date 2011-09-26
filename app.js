@@ -32,6 +32,7 @@ var express     = require('express'),
     query       = require('querystring'),
     url         = require('url'),
     http        = require('http'),
+    https       = require('https'),
     redis       = require('redis'),
     RedisStore  = require('connect-redis')(express),
     hashlib     = require('hashlib');
@@ -299,14 +300,32 @@ function processRequest(req, res, next) {
     }
 
     var paramString = query.stringify(params),
-        privateReqURL = apiConfig.protocol + '://' + apiConfig.baseURL + apiConfig.privatePath + methodURL + '?' + paramString;
+        privateReqURL = apiConfig.protocol + '://' + apiConfig.host + (apiConfig.port ? ':' + apiConfig.port : '') + apiConfig.privatePath + methodURL,
         options = {
             headers: {},
             protocol: apiConfig.protocol,
-            host: apiConfig.baseURL,
+            host: apiConfig.host,
             method: httpMethod,
-            path: apiConfig.publicPath + methodURL + '?' + paramString
+            path: apiConfig.publicPath + methodURL
         };
+    if (apiConfig.port) {
+        options.port = apiConfig.port;
+    }
+    if (paramString) {
+        switch (httpMethod) {
+            case 'GET':
+            case 'DELETE':
+                privateReqURL += '?' + paramString;
+                options.path += '?' + paramString;
+                break;
+            case 'PUT':
+            case 'POST':
+                options.headers["Content-Length"] = Buffer.byteLength(paramString);
+                options.headers["Content-Type"] = "application/x-www-form-urlencoded";
+                options.body = paramString;
+                break;
+        }
+    }
 
     if (apiConfig.oauth) {
         console.log('Using OAuth');
@@ -456,7 +475,18 @@ function processRequest(req, res, next) {
 
         // Add API Key to params, if any.
         if (apiKey != '') {
-            options.path += '&' + apiConfig.keyParam + '=' + apiKey;
+            switch (httpMethod) {
+                case 'GET':
+                case 'DELETE':
+                    options.path += (options.path.indexOf('?') === -1 ? '?': '&') + apiConfig.keyParam + '=' + apiKey;
+                    break;
+                case 'PUT':
+                case 'POST':
+                    if (options.body)
+                        options.body += '&';
+                    options.body += apiConfig.keyParam + '=' + apiKey;
+                    break;
+            }
         }
 
         // Perform signature routine, if any.
@@ -502,8 +532,13 @@ function processRequest(req, res, next) {
             console.log(util.inspect(options));
         };
 
+        var httpModel = http;
+        if (options.protocol === "https") {
+            httpModel = https;
+        }
+
         // API Call. response is the response from the API, res is the response we will send back to the user.
-        var apiCall = http.request(options, function(response) {
+        var apiCall = httpModel.request(options, function(response) {
             response.setEncoding('utf-8');
             if (config.debug) {
                 console.log('HEADERS: ' + JSON.stringify(response.headers));
@@ -553,6 +588,10 @@ function processRequest(req, res, next) {
                 console.log("Error: " + util.inspect(e));
             };
         });
+
+        if ((httpMethod == "POST" || httpMethod =="PUT") && options.body != null && options.body != "" ) {
+           apiCall.write(options.body);
+        }
 
         apiCall.end();
     }
