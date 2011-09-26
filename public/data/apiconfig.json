@@ -42,5 +42,16 @@
              "version": "1.0",
              "crypt": "HMAC-SHA1"
         }
+    },
+    "jira": {
+      "name": "JIRA 5.0",
+      "protocol": "http",
+      "baseURL": "localhost:2990",
+      "host": "localhost",
+      "port": "2990",
+      "publicPath": "/jira",
+      "auth": "",
+      "booleanTrueVal": "true",
+      "booleanFalseVal": "false"
     }
 }

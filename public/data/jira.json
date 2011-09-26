@@ -1,0 +1,1500 @@
+{
+  "endpoints":[
+    {
+      "name":"Websudo",
+      "methods":[
+        {
+          "MethodName":"websudo",
+          "Synopsis":"",
+          "HTTPMethod":"delete",
+          "URI":"auth/1/websudo/",
+          "RequiresOAuth":"N",
+          "parameters":[
+
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Issue Links",
+      "methods":[
+        {
+          "MethodName":"issue link",
+          "Synopsis":"Creates an issue link between two issues.\n The user requires the link issue permission for the issue which will be linked to another issue.\n The specified link type in the request is used to create the link and will create a link from the first issue\n to the second issue using the outward description. It also create a link from the second issue to the first issue using the\n inward description of the issue link type.\n It will add the supplied comment to the first issue. The comment can have a restriction who can view it.\n If group is specified, only users of this group can view this comment, if roleLevel is specified only users who have the specified role can view this comment.\n The user who creates the issue link needs to belong to the specified group or have the specified role.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/issueLink/",
+          "RequiresOAuth":"N",
+          "parameters":[
+
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Search",
+      "methods":[
+        {
+          "MethodName":"search issues",
+          "Synopsis":"Searches for issues using JQL.\n\n <p><b>Sorting</b>\n the <code>jql</code> parameter is a full <a href=\"http://confluence.atlassian.com/display/JIRA/Advanced+Searching\">JQL</a>\n  expression, and includes an <code>ORDER BY</code> clause.\n </p>\n\n <p><b>GET vs POST:</b>\n  If the JQL query is too large to be encoded as a query param you should instead\n  POST to this resource.\n </p>",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/search/",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"jql",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"a JQL query string"
+            },
+            {
+              "Name":"startAt",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the index of the first issue to return (0-based)"
+            },
+            {
+              "Name":"maxResults",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the maximum number of issues to return (defaults to 50). The maximum allowable value is\n dictated by the JIRA property 'jira.search.views.default.max'. If you specify a value that is higher than this\n number, your search results will be truncated."
+            },
+            {
+              "Name":"fields",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the list of fields to return for each issue. If null, all fields are returned."
+            },
+            {
+              "Name":"expand",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the parameters to expand"
+            }
+          ]
+        },
+        {
+          "MethodName":"search issues",
+          "Synopsis":"Performs a search using JQL.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/search/",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"jql",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"a JQL query string"
+            },
+            {
+              "Name":"startAt",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the index of the first issue to return (0-based)"
+            },
+            {
+              "Name":"maxResults",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the maximum number of issues to return (defaults to 50). The maximum allowable value is\n dictated by the JIRA property 'jira.search.views.default.max'. If you specify a value that is higher than this\n number, your search results will be truncated."
+            },
+            {
+              "Name":"fields",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the list of fields to return for each issue. If null, all fields are returned."
+            },
+            {
+              "Name":"expand",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the parameters to expand"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Comments",
+      "methods":[
+        {
+          "MethodName":"comment",
+          "Synopsis":"Returns a single issue comment.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/:id/",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the ID of the comment to request"
+            },
+            {
+              "Name":"render",
+              "Required":"N",
+              "Default":"false",
+              "Type":"boolean",
+              "Description":"true if text fields should be rendered according to the renderer associated with them; false to return the raw, unrendered data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Status",
+      "methods":[
+        {
+          "MethodName":"status",
+          "Synopsis":"Returns a full representation of the Status having the given id.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/status/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"a numeric Status ID"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Roles",
+      "methods":[
+        {
+          "MethodName":"roles",
+          "Synopsis":"Contains a list of roles in this project with links to full details.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/project/:projectKey/role/",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"projectKey",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project key"
+            }
+          ]
+        },
+        {
+          "MethodName":"role",
+          "Synopsis":"Details on a given project role.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/project/:projectKey/role/:id/",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"projectKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project key"
+            },
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project role id"
+            }
+          ]
+        },
+        {
+          "MethodName":"role",
+          "Synopsis":"Updates a project role to contain the sent actors.",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/project/:projectKey/role/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"projectKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project key"
+            },
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project role id"
+            }
+          ]
+        },
+        {
+          "MethodName":"role",
+          "Synopsis":"Add an actor to a project role.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/project/:projectKey/role/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"projectKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project key"
+            },
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project role id"
+            }
+          ]
+        },
+        {
+          "MethodName":"role",
+          "Synopsis":"Remove actors from a project role.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/project/:projectKey/role/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"projectKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project key"
+            },
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project role id"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Groups",
+      "methods":[
+        {
+          "MethodName":"group",
+          "Synopsis":"Returns groups with substrings matching a given query. This is mainly for use with\n the group picker, so the returned groups contain html to be used as picker suggestions.\n The groups are also wrapped in a single response object that also contains a header for\n use in the picker, specifically <i>Showing X of Y matching groups</i>.\n\n The number of groups returned is limited by the system property \"jira.ajax.autocomplete.limit\"\n\n The groups will be unique and sorted.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/groups/picker",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"query",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String to match groups agains"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"User",
+      "methods":[
+        {
+          "MethodName":"user",
+          "Synopsis":"Returns a user. This resource cannot be accessed anonymously.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/user",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the username"
+            }
+          ]
+        },
+        {
+          "MethodName":"search user",
+          "Synopsis":"Returns a list of users that match the search string. This resource cannot be accessed anonymously.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/user/search",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the username"
+            }
+          ]
+        },
+        {
+          "MethodName":"assignable user",
+          "Synopsis":"Returns a list of users that match the search string. This resource cannot be accessed anonymously.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/user/assignable/search",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the username"
+            },
+            {
+              "Name":"project",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the key of the project we are finding assignable users for"
+            }
+          ]
+        },
+        {
+          "MethodName":"user avatars",
+          "Synopsis":"Returns all avatars which are visible for the currently logged in user.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/user/:username/avatars",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the username"
+            }
+          ]
+        },
+        {
+          "MethodName":"user avatar",
+          "Synopsis":"Converts temporary avatar into a real avatar.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/user/:username/avatars",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the username"
+            }
+          ]
+        },
+        {
+          "MethodName":"user avatar",
+          "Synopsis":"Updates temporary avatar into a real avatar.",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/user/:username/avatars",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the username"
+            }
+          ]
+        },
+        {
+          "MethodName":"temporary user avatar",
+          "Synopsis":"Creates temporary avatar.",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/user/:username/avatars/temporary",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the username"
+            },
+            {
+              "Name":"filename",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"name of the file being uploaded"
+            },
+            {
+              "Name":"size",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"size of file"
+            }
+          ]
+        },
+        {
+          "MethodName":"user avatar",
+          "Synopsis":"Deletes avatar.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/user/:username/avatar/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the username"
+            },
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"database id for avatar"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Version",
+      "methods":[
+        {
+          "MethodName":"version",
+          "Synopsis":"Create a version via POST.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/version/",
+          "RequiresOAuth":"N",
+          "parameters":[
+
+          ]
+        },
+        {
+          "MethodName":"version",
+          "Synopsis":"Delete a project version",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/version/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"id of project"
+            },
+            {
+              "Name":"moveFixIssuesTo",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"The version to set fixVersion to on issues where the deleted version is the fix version, If null then the fixVersion is removed."
+            },
+            {
+              "Name":"moveAffectedIssuesTo",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"The version to set affectedVersion to on issues where the deleted version is the affected version, If null then the affectedVersion is removed."
+            }
+          ]
+        },
+        {
+          "MethodName":"version",
+          "Synopsis":"Returns a project version",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/version/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"id of project"
+            }
+          ]
+        },
+        {
+          "MethodName":"version",
+          "Synopsis":"Modify a version via PUT. Any fields present in the PUT will override existing values. As a convenience, if a field is not present, it is silently ignored.",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/version/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"id of project"
+            }
+          ]
+        },
+        {
+          "MethodName":"related issue counts",
+          "Synopsis":"Returns a bean containing the number of fixed in and affected issues for the given version.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/version/:id/relatedIssueCounts",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"id of project"
+            }
+          ]
+        },
+        {
+          "MethodName":"unresolved issue counts",
+          "Synopsis":"Returns the number of unresolved issues for the given version",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/version/:id/relatedIssueCounts",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"id of project"
+            }
+          ]
+        },
+        {
+          "MethodName":"move version sequence",
+          "Synopsis":"Modify a version's sequence within a project. The move version bean has 2 alternative field value pairs -- position: an absolute position, which may have a value of First, Last, Earlier, or Later. after: a version to place this version after. The value should be the self link of another version.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/version/:id/move",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"id of project"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Issues",
+      "methods":[
+        {
+          "MethodName":"issue",
+          "Synopsis":"Creates an issue from a JSON representation.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/issue/",
+          "RequiresOAuth":"N",
+          "parameters":[
+          ]
+        },
+        {
+          "MethodName":"issue",
+          "Synopsis":"Returns an issue from a JSON representation.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issue/:issueIdOrKey",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            },
+            {
+              "Name":"fields",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the list of fields to return for the issue. If null, all fields are returned."
+            }
+          ]
+        },
+        {
+          "MethodName":"issue",
+          "Synopsis":"Updates an issue from a JSON representation.",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/issue/:issueIdOrKey",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"transition",
+          "Synopsis":"Get a list of the transitions possible for this issue by the current user, along with fields that are required and their types.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/transition",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"transition",
+          "Synopsis":"Perform a transition on an issue. The POST must contain a single JSON Object. It must have a \"transition\" string and a \"fields\" object. A \"comment\" is optional. The comment can be either a simple string or an object with a \"body\" and \"role\" or \"group\".",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/transition",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"vote",
+          "Synopsis":"A REST sub-resource representing the voters on the issue. This sub-resource is also used for voting and unvoting (via POST and DELETE).",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/votes",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"vote",
+          "Synopsis":"Cast your vote in favour of an issue.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/votes",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"vote",
+          "Synopsis":"Remove your vote from an issue. (i.e. \"unvote\")",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/votes",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"watcher",
+          "Synopsis":"Returns the list of watchers for the issue with the given key.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/watchers",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"watcher",
+          "Synopsis":"Adds a user to an issue's watcher list.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/watchers",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"watcher",
+          "Synopsis":"Removes a user from an issue's watcher list.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/watchers",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            },
+            {
+              "Name":"username",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing the name of the user to remove from the watcher list"
+            }
+          ]
+        },
+        {
+          "MethodName":"subtasks",
+          "Synopsis":"Delete an issue. If the issue has subtasks you must set the parameter deleteSubtasks=true to delete the issue. You cannot delete an issue without its subtasks also being deleted.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/issue/:issueIdOrKey",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            },
+            {
+              "Name":"deleteSubtasks",
+              "Required":"Y",
+              "Default":"false",
+              "Type":"boolean",
+              "Description":"a String of true or false indicating that any subtasks should also be deleted. If the issue has no subtasks this parameter is ignored. If the issue has subtasks and this parameter is missing or false, then the issue will not be deleted and an error will be returned."
+            }
+          ]
+        },
+        {
+          "MethodName":"createmeta",
+          "Synopsis":"Returns the meta data for creating issues. This includes the available projects, issue types and fields, including field types and whether or not those fields are required. Projects will not be returned if the user does not have permission to create issues in that project. Fields will only be returned if expand=projects.issuetypes.fields. The results can be filtered by project and/or issue type, given by the query params.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issue/createmeta",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"projectIds",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"combined with the projectKeys param, lists the projects with which to filter the results. If absent, all projects are returned. This parameter can be specified multiple times, and/or be a comma-separated list. Specifiying a project that does not exist (or that you cannot create issues in) is not an error, but it will not be in the results."
+            },
+            {
+              "Name":"projectKeys",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"combined with the projectIds param, lists the projects with which to filter the results. If null, all projects are returned. This parameter can be specified multiple times, and/or be a comma-separated list. Specifiying a project that does not exist (or that you cannot create issues in) is not an error, but it will not be in the results."
+            },
+            {
+              "Name":"issuetypeIds",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"combinded with issuetypeNames, lists the issue types with which to filter the results. If null, all issue types are returned. This parameter can be specified multiple times, and/or be a comma-separated list. Specifiying an issue type that does not exist is not an error."
+            },
+            {
+              "Name":"issuetypeNames",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"combinded with issuetypeIds, lists the issue types with which to filter the results. If null, all issue types are returned. This parameter can be specified multiple times, but is NOT interpreted as a comma-separated list. Specifiying an issue type that does not exist is not an error."
+            }
+          ]
+        },
+        {
+          "MethodName":"editmeta",
+          "Synopsis":"Returns the metadata for editing an issue",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/editmeta",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"remotelinks",
+          "Synopsis":"A REST sub-resource representing the remote issue links on the issue. This sub-resource is also used for creating, updating and deleting links (via POST, PUT and DELETE).",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/remotelink",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            },
+            {
+              "Name":"globalid",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"if not null, return only the remote issue link with this globalId"
+            }
+          ]
+        },
+        {
+          "MethodName":"remotelinks",
+          "Synopsis":"Creates or updates a remote issue link from a JSON representation. If a globalId is provided and a remote issue link exists with that globalId, the remote issue link is updated. Otherwise, the remote issue link is created.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/remotelink",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"remotelinks",
+          "Synopsis":"Delete the remote issue link with the given global id on the issue.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/remotelink",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            }
+          ]
+        },
+        {
+          "MethodName":"remotelink",
+          "Synopsis":"Get the remote issue link with the given id on the issue.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/remotelink/:linkId",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., JRA-1330)"
+            },
+            {
+              "Name":"linkId",
+              "Required":"Y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the id of the remote issue link"
+            }
+          ]
+        },
+        {
+          "MethodName":"remotelink",
+          "Synopsis":"updates a remote issue link from a json representation. any fields not provided are set to null.",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/remotelink/:linkId",
+          "RequiresOAuth":"n",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., jra-1330)"
+            },
+            {
+              "Name":"linkId",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the id of the remote issue link"
+            }
+          ]
+        },
+        {
+          "MethodName":"remotelink",
+          "Synopsis":"Delete the remote issue link with the given id on the issue.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/remotelink/:linkId",
+          "RequiresOAuth":"n",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue id or key to update (i.e., jra-1330)"
+            },
+            {
+              "Name":"linkId",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the id of the remote issue link"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Priorities",
+      "methods":[
+        {
+          "MethodName":"priority",
+          "Synopsis":"Returns an issue priority.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/priority/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing the priority id"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Sessions",
+      "methods":[
+        {
+          "MethodName":"session",
+          "Synopsis":"Login a user to JIRA.",
+          "HTTPMethod":"post",
+          "URI":"/rest/auth/1/session",
+          "RequiresOAuth":"N",
+          "parameters":[
+          ]
+        },
+        {
+          "MethodName":"session",
+          "Synopsis":"Get information about the current user. If the current user is anonymous they will get a permission denied error trying to access this resource. The response contains information about the current user. It will contain their username, login information, and a link to the User Resource for the user.",
+          "HTTPMethod":"get",
+          "URI":"/rest/auth/1/session",
+          "RequiresOAuth":"N",
+          "parameters":[
+          ]
+        },
+        {
+          "MethodName":"session",
+          "Synopsis":"Log the current user out of JIRA.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/auth/1/session",
+          "RequiresOAuth":"N",
+          "parameters":[
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Components",
+      "methods":[
+        {
+          "MethodName":"component",
+          "Synopsis":"Create a component via POST. Any fields present in the PUT will override existing values. As a convenience, if a field\n is not present, it is silently ignored.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/component",
+          "RequiresOAuth":"N",
+          "parameters":[
+          ]
+        },
+        {
+          "MethodName":"component",
+          "Synopsis":"Delete a project component.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/component/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the component ID"
+            },
+            {
+              "Name":"moveIssuesTo",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"The new component applied to issues whose 'id' component will be deleted. If this value is null, then the 'id' component is simply deleted."
+            }
+          ]
+        },
+        {
+          "MethodName":"component",
+          "Synopsis":"Returns a project component.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/component/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the component ID"
+            }
+          ]
+        },
+        {
+          "MethodName":"component",
+          "Synopsis":"Updates a project component.",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/component/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the component ID"
+            }
+          ]
+        },
+        {
+          "MethodName":"related issue count by component",
+          "Synopsis":"Returns an issue count based on the selected component.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/component/:id/relatedIssueCounts",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the component ID"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Projects",
+      "methods":[
+        {
+          "MethodName":"project",
+          "Synopsis":"Returns all projects which are visible for the currently logged in user. If no user is logged in, it returns the\n list of projects that are visible when using anonymous access.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/project",
+          "RequiresOAuth":"N",
+          "parameters":[
+          ]
+        },
+        {
+          "MethodName":"project",
+          "Synopsis":"Contains a full representation of a project in JSON format.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/project/:key",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"key",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project's key"
+            }
+          ]
+        },
+        {
+          "MethodName":"project avatars",
+          "Synopsis":"Converts temporary avatar into a real avatar",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/project/:key/avatar",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"key",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project's key"
+            }
+          ]
+        },
+        {
+          "MethodName":"project avatars",
+          "Synopsis":"Updates temporary avatar into a real avatar",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/project/:key/avatar",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"key",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project's key"
+            }
+          ]
+        },
+        {
+          "MethodName":"temporary project avatars",
+          "Synopsis":"Creates temporary avatar",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/project/:key/avatar/temporary",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"key",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project's key"
+            },
+            {
+              "Name":"filename",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"name of file being uploaded"
+            },
+            {
+              "Name":"size",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"size of file"
+            }
+          ]
+        },
+        {
+          "MethodName":"project avatar",
+          "Synopsis":"Deletes avatar",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/project/:key/avatar/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"key",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project's key"
+            },
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"database id for avatar"
+            }
+          ]
+        },
+        {
+          "MethodName":"project versions",
+          "Synopsis":"Contains a full representation of a the specified project's versions.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/project/:key/versions",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"key",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project's key"
+            },
+            {
+              "Name":"expand",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"allows expansion of ???"
+            }
+          ]
+        },
+        {
+          "MethodName":"project components",
+          "Synopsis":"Contains a full representation of a the specified project's components.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/project/:key/components",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"key",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"the project's key"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Issue Types",
+      "methods":[
+        {
+          "MethodName":"issue type",
+          "Synopsis":"Returns a full representation of the issue type that has the given id.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issueType/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing an issue type id"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Issue Link Types",
+      "methods":[
+        {
+          "MethodName":"issue link types",
+          "Synopsis":"Returns a list of available issue link types, if issue linking is enabled.\n Each issue link type has an id, a name and a label for the outward and inward link relationship.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issueLinkType",
+          "RequiresOAuth":"N",
+          "parameters":[
+          ]
+        },
+        {
+          "MethodName":"issue link type",
+          "Synopsis":"Returns for a given issue link type id all information about this issue link type.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/issueLinkType/:issueLinkTypeId/",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueLinkTypeId",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing an issue link type id"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Custom Field Options",
+      "methods":[
+        {
+          "MethodName":"custom field option",
+          "Synopsis":"Returns a full representation of the custom Field Option that has the given id.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/customFieldOption/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing an custom Field Option id"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Resolutions",
+      "methods":[
+        {
+          "MethodName":"getResolution",
+          "Synopsis":"Returns a resolution.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/resolution/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing the resolution id"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Attachments",
+      "methods":[
+        {
+          "MethodName":"attachment",
+          "Synopsis":"Returns the meta-data for an attachment, including the URI of the actual attached file.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/attachment/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing the attachment id"
+            }
+          ]
+        },
+        {
+          "MethodName":"attachment",
+          "Synopsis":"Remove an attachment from an issue.",
+          "HTTPMethod":"delete",
+          "URI":"/rest/api/2/attachment/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"y",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing the attachment id"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Issue Attachments",
+      "methods":[
+        {
+          "MethodName":"attachment",
+          "Synopsis":"Add one or more attachments to an issue.\n <p>\n This resource expects a multipart post. The media-type multipart/form-data is defined in RFC 1867. Most client\n libraries have classes that make dealing with multipart posts simple. For instance, in Java the Apache HTTP Components\n library provides a\n <a href=\"http://hc.apache.org/httpcomponents-client-ga/httpmime/apidocs/org/apache/http/entity/mime/MultipartEntity.html\">MultiPartEntity</a>\n that makes it simple to submit a multipart POST.\n <p>\n In order to protect against XSRF attacks, because this method accepts multipart/form-data, it has XSRF protection\n on it.  This means you must submit a header of X-Atlassian-Token: nocheck with the request, otherwise it will be\n blocked.",
+          "HTTPMethod":"post",
+          "URI":"/rest/api/2/issue/:issueIdOrKey/attachments",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"issueIdOrKey",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"the issue that you want to add the attachments to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Worklogs",
+      "methods":[
+        {
+          "MethodName":"worklog",
+          "Synopsis":"Returns a work log.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/worklog/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":"a String containing the work log id"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Application Properties",
+      "methods":[
+        {
+          "MethodName":"application properties",
+          "Synopsis":"",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/application-properties",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"key",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":""
+            }
+          ]
+        },
+        {
+          "MethodName":"application properties",
+          "Synopsis":"",
+          "HTTPMethod":"put",
+          "URI":"/rest/api/2/application-properties/:id",
+          "RequiresOAuth":"N",
+          "parameters":[
+            {
+              "Name":"id",
+              "Required":"N",
+              "Default":"",
+              "Type":"string",
+              "Description":""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"Server Information ",
+      "methods":[
+        {
+          "MethodName":"server info",
+          "Synopsis":"Returns general information about the current JIRA server.",
+          "HTTPMethod":"get",
+          "URI":"/rest/api/2/serverInfo",
+          "RequiresOAuth":"N",
+          "parameters":[
+          ]
+        }
+      ]
+    }
+  ]
+}
+
