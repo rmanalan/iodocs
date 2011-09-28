@@ -736,6 +736,17 @@ li {
 .clearfix {
   zoom: 1;
 }
+.payload {
+  width:99%;
+  min-height:150px;
+  font-family: menlo, monospace;
+  font-size:11px;
+  border:1px solid #ccc;
+  padding:5px;
+  -webkit-border-radius:5px;
+  border-radius:5px;
+  resize:vertical;
+}
 
 @media print {
   * {

@@ -44,13 +44,16 @@
         }
     },
     "jira": {
-      "name": "JIRA 5.0",
+      "name": "JIRA 5.0 REST APIs",
       "protocol": "http",
-      "baseURL": "localhost:2990",
       "host": "localhost",
       "port": "2990",
+      "auth": "basic",
+      "basicAuth": {
+        "username": "admin",
+        "password": "admin"
+      },
       "publicPath": "/jira",
-      "auth": "",
       "booleanTrueVal": "true",
       "booleanFalseVal": "false"
     }

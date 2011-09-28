@@ -7,7 +7,7 @@ h1=apiInfo.name
 
 form#credentials
     input(type='hidden', name='apiName', value=apiName)
-    - if (apiInfo.auth) 
+    - if (apiInfo.auth && !/^basic/i.test(apiInfo.auth)) 
         section(class='credentials ' + authed)
          - if (authed && apiInfo.oauth)
              span Authenticated with OAuth
@@ -121,6 +121,9 @@ ul
                                                           input(name='params[' + parameter.Name + ']', value=parameter.Default, placeholder=className)
                                                   td.type=parameter.Type
                                                   td.description=parameter.Description || 'No description'
+                            - if (method.HTTPMethod.toLowerCase() === 'post' || method.HTTPMethod.toLowerCase() === 'put')
+                              textarea(class='payload clearfix', name='payload', placeholder='{}')= JSON.stringify(method.Template,null,2)
+
                             - if (method.headers && method.headers.length > 0)
                                 div.headers
                                     h4.title

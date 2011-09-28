@@ -268,11 +268,12 @@ function oauthSuccess(req, res, next) {
 //
 function processRequest(req, res, next) {
     if (config.debug) {
-        console.log(util.inspect(req.body, null, 3));
+        console.log('req.body: ' + util.inspect(req.body, null, 3));
     };
 
     var reqQuery = req.body,
         params = reqQuery.params || {},
+        payload = reqQuery.payload,
         methodURL = reqQuery.methodUri,
         httpMethod = reqQuery.httpMethod,
         apiKey = reqQuery.apiKey,
@@ -306,29 +307,19 @@ function processRequest(req, res, next) {
             protocol: apiConfig.protocol,
             host: apiConfig.host,
             method: httpMethod,
-            path: apiConfig.publicPath + methodURL
+            path: apiConfig.publicPath + methodURL + '?' + paramString
+            //path: apiConfig.publicPath + methodURL
         };
     if (apiConfig.port) {
         options.port = apiConfig.port;
     }
-    if (paramString) {
-        switch (httpMethod) {
-            case 'GET':
-            case 'DELETE':
-                privateReqURL += '?' + paramString;
-                options.path += '?' + paramString;
-                break;
-            case 'PUT':
-            case 'POST':
-                options.headers["Content-Length"] = Buffer.byteLength(paramString);
-                options.headers["Content-Type"] = "application/x-www-form-urlencoded";
-                options.body = paramString;
-                break;
-        }
+    if (payload) {
+      options.body = payload;
+      options.headers["Content-Length"] = Buffer.byteLength(options.body);
+      options.headers["Content-Type"] = "application/json";
     }
 
-    if (apiConfig.oauth) {
-        console.log('Using OAuth');
+    if (/^oauth/i.test(apiConfig.auth) && apiConfig.oauth) {
 
         // Three legged OAuth
         if (apiConfig.oauth.type == 'three-legged' && (reqQuery.oauth == 'authrequired' || (req.session[apiName] && req.session[apiName].authed))) {
@@ -462,31 +453,23 @@ function processRequest(req, res, next) {
 
         } else {
             // API uses OAuth, but this call doesn't require auth and the user isn't already authed, so just call it.
-            unsecuredCall();
+            basicCall();
         }
+    } else if (/^basic/i.test(apiConfig.auth) && apiConfig.basicAuth){
+        // Basic auth call
+        basicCall(apiConfig.basicAuth);
     } else {
         // API does not use authentication
-        unsecuredCall();
+        basicCall();
     }
 
     // Unsecured API Call helper
-    function unsecuredCall() {
+    function basicCall(basicAuth) {
         console.log('Unsecured Call');
 
         // Add API Key to params, if any.
-        if (apiKey != '') {
-            switch (httpMethod) {
-                case 'GET':
-                case 'DELETE':
-                    options.path += (options.path.indexOf('?') === -1 ? '?': '&') + apiConfig.keyParam + '=' + apiKey;
-                    break;
-                case 'PUT':
-                case 'POST':
-                    if (options.body)
-                        options.body += '&';
-                    options.body += apiConfig.keyParam + '=' + apiKey;
-                    break;
-            }
+        if (apiKey != '' && apiKey != 'undefined') {
+            options.path += '&' + apiConfig.keyParam + '=' + apiKey;
         }
 
         // Perform signature routine, if any.
@@ -528,6 +511,10 @@ function processRequest(req, res, next) {
             options.headers['Content-Length'] = 0;
         }
 
+        // delete trailing ? if there are no parameters that follow it
+        if(/\?$/.test(options.path)) options.path = options.path.split('?').slice(0,-1).join('');
+        
+
         if (config.debug) {
             console.log(util.inspect(options));
         };
@@ -537,6 +524,11 @@ function processRequest(req, res, next) {
             httpModel = https;
         }
 
+        // Basic auth support
+        if (basicAuth && basicAuth.username && basicAuth.password){
+          options.headers['Authorization'] = "Basic " + new Buffer(basicAuth.username + ":" + basicAuth.password).toString('base64');
+        }
+        
         // API Call. response is the response from the API, res is the response we will send back to the user.
         var apiCall = httpModel.request(options, function(response) {
             response.setEncoding('utf-8');
@@ -561,7 +553,6 @@ function processRequest(req, res, next) {
                 switch (true) {
                     case /application\/javascript/.test(responseContentType):
                     case /application\/json/.test(responseContentType):
-                        console.log(util.inspect(body));
                         // body = JSON.parse(body);
                         break;
                     case /application\/xml/.test(responseContentType):
@@ -577,11 +568,11 @@ function processRequest(req, res, next) {
                 // Response body
                 req.result = body;
 
-                console.log(util.inspect(body));
-
                 next();
             })
-        }).on('error', function(e) {
+        });
+
+        apiCall.on('error', function(e) {
             if (config.debug) {
                 console.log('HEADERS: ' + JSON.stringify(res.headers));
                 console.log("Got error: " + e.message);
@@ -589,7 +580,7 @@ function processRequest(req, res, next) {
             };
         });
 
-        if ((httpMethod == "POST" || httpMethod =="PUT") && options.body != null && options.body != "" ) {
+        if ((httpMethod.toLowerCase() === "post" || httpMethod.toLowerCase() =="put") && options.body !== null && options.body !== "" ) {
            apiCall.write(options.body);
         }
 

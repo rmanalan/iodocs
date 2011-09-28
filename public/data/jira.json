@@ -84,41 +84,6 @@
           "URI":"/rest/api/2/search/",
           "RequiresOAuth":"N",
           "parameters":[
-            {
-              "Name":"jql",
-              "Required":"N",
-              "Default":"",
-              "Type":"string",
-              "Description":"a JQL query string"
-            },
-            {
-              "Name":"startAt",
-              "Required":"N",
-              "Default":"",
-              "Type":"string",
-              "Description":"the index of the first issue to return (0-based)"
-            },
-            {
-              "Name":"maxResults",
-              "Required":"N",
-              "Default":"",
-              "Type":"string",
-              "Description":"the maximum number of issues to return (defaults to 50). The maximum allowable value is\n dictated by the JIRA property 'jira.search.views.default.max'. If you specify a value that is higher than this\n number, your search results will be truncated."
-            },
-            {
-              "Name":"fields",
-              "Required":"N",
-              "Default":"",
-              "Type":"string",
-              "Description":"the list of fields to return for each issue. If null, all fields are returned."
-            },
-            {
-              "Name":"expand",
-              "Required":"N",
-              "Default":"",
-              "Type":"string",
-              "Description":"the parameters to expand"
-            }
           ]
         }
       ]
@@ -130,7 +95,7 @@
           "MethodName":"comment",
           "Synopsis":"Returns a single issue comment.",
           "HTTPMethod":"get",
-          "URI":"/rest/api/2/:id/",
+          "URI":"/rest/api/2/comment/:id/",
           "RequiresOAuth":"N",
           "parameters":[
             {
@@ -599,10 +564,28 @@
           "MethodName":"issue",
           "Synopsis":"Creates an issue from a JSON representation.",
           "HTTPMethod":"post",
-          "URI":"/rest/api/2/issue/",
+          "URI":"/rest/api/2/issue",
           "RequiresOAuth":"N",
           "parameters":[
-          ]
+          ],
+          "Template":
+          {
+            "fields": {
+              "project": {
+                "id": "10000"
+              },
+              "summary": "something's wrong",
+              "issuetype": {
+                "id": "5"
+              },
+              "reporter": {
+                "name": "admin"
+              },
+              "assignee": {
+                "name": "admin"
+              }
+            }
+          }
         },
         {
           "MethodName":"issue",
